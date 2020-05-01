@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  app:
+    container_name: app
+    restart: always
+    build: .
+    image: sql_app
+    ports:
+      - 4200:4200
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app
+    depends_on:
+      - postgresql
+
+  postgresql:
+    container_name: postgresql
+    image: postgres
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=test123
+        - POSTGRES_DB=enterprisecontentmanagement
+    volumes:
+      - ./database-data:/usr/src/app/data/db
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgresql
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    restart: unless-stopped

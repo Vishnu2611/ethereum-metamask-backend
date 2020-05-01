@@ -1,0 +1,85 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Passlinks",
+    "description": "About Project",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4200",
+      "description": "Nodejs Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "paths": {
+    "/api/user/": {
+      "get": {
+        "summary": "Sign in a user.",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "publicAddress",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "publicAdress of the user to login"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created"
+          },
+          "500": {
+            "description": "User created"
+          }
+        }
+      }
+    },
+    "/api/user/signature": {
+      "post": {
+        "summary": "Check signature of user from metamask.",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "publicAddress": {
+                    "type": "string"
+                  },
+                  "nounce": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User login success"
+          },
+          "500": {
+            "description": "User login failed"
+          }
+        }
+      }
+    }
+  }
+}
